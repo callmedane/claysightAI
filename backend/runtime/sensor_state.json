@@ -1,0 +1,58 @@
+{
+  "camera": {
+    "label": "Camera / Vision",
+    "connected": false,
+    "ready": false,
+    "notes": "Connect Pi Camera or USB camera.",
+    "source": "mock",
+    "last_reading_at": null
+  },
+  "thermal": {
+    "label": "Thermal Sensor",
+    "connected": false,
+    "ready": false,
+    "notes": "Reserved for thermal anomaly reading.",
+    "source": "mock",
+    "last_reading_at": "2026-04-01T14:14:56.501976+00:00"
+  },
+  "spectral": {
+    "label": "Spectral / NIR Proxy",
+    "connected": false,
+    "ready": false,
+    "notes": "For low-cost spectral approximation.",
+    "source": "mock",
+    "last_reading_at": "2026-04-01T14:14:56.501976+00:00"
+  },
+  "moisture": {
+    "label": "Moisture Sensor",
+    "connected": false,
+    "ready": false,
+    "notes": "For clay moisture monitoring.",
+    "source": "mock",
+    "last_reading_at": "2026-04-01T14:14:56.501976+00:00"
+  },
+  "vibration": {
+    "label": "Acoustic / Vibration",
+    "connected": false,
+    "ready": false,
+    "notes": "For knock or vibration feedback.",
+    "source": "mock",
+    "last_reading_at": "2026-04-01T14:14:56.501976+00:00"
+  },
+  "inductive": {
+    "label": "Inductive / Metallic",
+    "connected": false,
+    "ready": false,
+    "notes": "For metallic contamination.",
+    "source": "mock",
+    "last_reading_at": "2026-04-01T14:14:56.501976+00:00"
+  },
+  "gas": {
+    "label": "Gas / Ambient",
+    "connected": false,
+    "ready": false,
+    "notes": "For surrounding environment checks.",
+    "source": "mock",
+    "last_reading_at": "2026-04-01T14:14:56.501976+00:00"
+  }
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, initial-scale=1.0" />
+  <title>ClaySight AI</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script>
+    (function() {
+      const saved = localStorage.getItem('claysight-theme');
+      const theme = (saved === 'dark' || saved === 'light') ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.classList.add(`theme-${theme}`);
+    })();
+  </script>
+  <script src="/config.js"></script>
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-mark">
+          <img src="/assets/img/logo.png" alt="Greenware Logo" />
+        </div>
+        <div class="brand-text">
+          <h1>ClaySight AI</h1>
+          <p>Greenware Inspection System</p>
+        </div>
+      </div>
+
+<div class="project-title-box">
+  <span class="eyebrow">Team 2</span>
+  <strong>Multimodal Sensor Fusion for Greenware Defect Detection</strong>
+</div>
+
+      <nav class="nav-menu">
+        <a href="/" class="nav-link active">Dashboard</a>
+        <a href="/aboutus.html" class="nav-link">About Us</a>
+        <a href="/developer.html" class="nav-link">Developer Info</a>
+      </nav>
+
+      <div class="status-box">
+        <span>Backend</span>
+        <strong id="backendState">Checking...</strong>
+      </div>
+      <div class="status-box">
+        <span>Database</span>
+        <strong id="databaseState">Checking...</strong>
+      </div>
+      <div class="status-box">
+        <span>Model</span>
+        <strong id="modelState">Checking...</strong>
+      </div>
+      <div class="status-box">
+        <span>Decision</span>
+        <strong id="decisionLabel">Awaiting Scan</strong>
+      </div>
+
+      <button id="scanBtn" class="btn primary">Start Scan</button>
+      <button id="refreshBtn" class="btn secondary">Refresh</button>
+    </aside>
+
+    <main class="content">
+      <header class="hero card">
+        <div>
+          <h2>Inspection Dashboard</h2>
+          <p>Real-time monitoring of greenware defect detection and quality assessment</p>
+        </div>
+        <div class="hero-badges">
+          <span id="overallStatus" class="pill idle">IDLE</span>
+          <span class="pill neutral">Offline-ready</span>
+          <button id="themeToggle" class="btn tertiary theme-toggle" type="button" title="Toggle dark/light mode">🌙</button>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <article class="card"><span class="label">Debris Found</span><strong id="debrisCount">0</strong></article>
+        <article class="card"><span class="label">Moisture</span><strong id="moistureValue">--</strong></article>
+        <article class="card"><span class="label">Drying Time</span><strong id="dryingValue">--</strong></article>
+        <article class="card"><span class="label">Latest Recommendation</span><strong id="recommendation">No scan yet.</strong></article>
+      </section>
+
+      <section class="two-col">
+        <article class="card">
+          <div class="card-head"><h3>Sensor Status</h3><span class="muted">Ready for integration</span></div>
+          <div id="sensorGrid" class="sensor-grid"></div>
+        </article>
+        <article class="card">
+          <div class="card-head"><h3>Latest Defects</h3><span class="muted">Most recent scan</span></div>
+          <ul id="defectList" class="defect-list"></ul>
+        </article>
+      </section>
+
+      <section class="two-col">
+        <article class="card">
+          <div class="card-head"><h3>2D Defect Map</h3><span class="muted">Top view</span></div>
+          <canvas id="mapCanvas" width="520" height="300"></canvas>
+        </article>
+        <article class="card">
+          <div class="card-head"><h3>Summary</h3><span class="muted">Stored locally</span></div>
+          <div class="summary-list">
+            <div><span>Surface</span><strong id="surfaceCount">0</strong></div>
+            <div><span>Subsurface</span><strong id="subsurfaceCount">0</strong></div>
+            <div><span>Highest Confidence</span><strong id="highestConfidence">--</strong></div>
+            <div><span>Total Scans</span><strong id="totalScans">0</strong></div>
+            <div><span>Pass Rate</span><strong id="passRate">--</strong></div>
+            <div><span>Avg Defects</span><strong id="avgDefects">--</strong></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h3>Inspection History</h3><span class="muted">Latest records</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Scan ID</th><th>Status</th><th>Debris</th><th>Created</th></tr></thead>
+            <tbody id="historyBody"><tr><td colspan="4">No data yet.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

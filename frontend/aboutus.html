@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, initial-scale=1.0" />
+  <title>About Us | ClaySight AI</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script>
+    (function() {
+      const saved = localStorage.getItem('claysight-theme');
+      const theme = (saved === 'dark' || saved === 'light') ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.classList.add(`theme-${theme}`);
+    })();
+  </script>
+  <script src="/config.js"></script>
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-mark">
+          <img src="/assets/img/logo.png" alt="Greenware Logo" />
+        </div>
+        <div class="brand-text">
+          <h1>ClaySight AI</h1>
+          <p>Greenware Inspection System</p>
+        </div>
+      </div>
+
+      <div class="project-title-box">
+        <span class="eyebrow">Team 2</span>
+        <strong>Multimodal Sensor Fusion for Greenware Defect Detection</strong>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="/" class="nav-link">Dashboard</a>
+        <a href="/aboutus.html" class="nav-link active">About Us</a>
+        <a href="/developer.html" class="nav-link">Developer Info</a>
+      </nav>
+
+      <div class="status-box">
+        <span>Section</span>
+        <strong>Project Information</strong>
+      </div>
+
+      <div class="status-box">
+        <span>Project Type</span>
+        <strong>Project Design</strong>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="hero card">
+        <div>
+          <h2>About This Project</h2>
+          <p>Understanding our innovative greenware inspection platform</p>
+        </div>
+        <div class="hero-badges">
+          <span class="pill neutral">Team 2</span>
+          <span class="pill idle">Capstone Research</span>
+          <button id="themeToggle" class="btn tertiary theme-toggle" type="button" title="Toggle dark/light mode">🌙</button>
+        </div>
+      </header>
+
+      <section class="card">
+        <div class="card-head"><h3>Project Overview</h3></div>
+        <p>
+          Developed by Team 2 as a Computer Engineering capstone project, this system provides an offline-capable greenware inspection solution designed for future sensor and model integration, enabling early defect detection and improved quality control in local manufacturing.
+        </p>
+      </section>
+
+      <section class="two-col">
+        <article class="card">
+          <div class="card-head"><h3>🎯 Our Mission</h3></div>
+          <p>
+            To create an affordable, non-destructive inspection system that empowers small-scale pottery manufacturers through accessible and intelligent technology.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><h3>🌱 Our Vision</h3></div>
+          <p>
+            To modernize traditional greenware production by integrating sensor-based analysis, machine learning, and digital twin visualization.
+          </p>
+        </article>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h3>🔍 Key Capabilities</h3></div>
+        <ul style="margin: 16px 0; padding-left: 20px;">
+          <li>Surface and subsurface defect detection</li>
+          <li>Multimodal sensor fusion (thermal, optical, structural)</li>
+          <li>Offline-capable system for local deployment</li>
+          <li>Future-ready for Raspberry Pi and sensor integration</li>
+          <li>Digital twin visualization for real-time monitoring</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h3>⚙️ Technologies Used</h3></div>
+        <ul style="margin: 16px 0; padding-left: 20px;">
+          <li>Frontend: HTML, CSS, JavaScript</li>
+          <li>Backend: Python (FastAPI)</li>
+          <li>AI/ML: Deep Learning Models (CNN / RT-DETR ready)</li>
+          <li>Deployment: Raspberry Pi (planned)</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h3>👥 Development Team</h3></div>
+        <p>
+          Team 2 – Computer Engineering Students
+        </p>
+        <p style="margin-top: 12px;">
+          Focused on embedded systems, AI integration, and smart manufacturing solutions.
+        </p>
+      </section>
+
+      <section class="two-col">
+        <article class="card">
+          <div class="card-head"><h3>👨‍🏫 Project Design Adviser</h3></div>
+          <p><strong>Engr. Lloyd Aldrin Pornobi</strong></p>
+          <p style="margin-top: 8px; font-size: 14px; color: #666;">
+            Engineer & Project Design Adviser<br/>
+            Computer Engineering Department
+          </p>
+          <p style="margin-top: 12px; font-size: 13px;">
+            Provides guidance and oversight for the technical design, implementation, and research direction of the capstone project.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><h3>👨‍💼 Program Chair</h3></div>
+          <p><strong>ENGR. ROMAN M. RICHARD</strong></p>
+          <p style="margin-top: 8px; font-size: 14px; color: #666;">
+            Head, Computer Engineering Program<br/>
+            Computer Engineering Department
+          </p>
+          <p style="margin-top: 12px; font-size: 13px;">
+            Oversees the Computer Engineering program and ensures alignment with academic standards and capstone project requirements.
+          </p>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
