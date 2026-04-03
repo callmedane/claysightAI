@@ -21,7 +21,6 @@ const el = {
   totalScans: document.getElementById('totalScans'),
   passRate: document.getElementById('passRate'),
   avgDefects: document.getElementById('avgDefects'),
-  mapCanvas: document.getElementById('mapCanvas'),
   themeToggle: document.getElementById('themeToggle'),
   clearHistoryBtn: document.getElementById('clearHistoryBtn'),
   // Modal elements
@@ -37,8 +36,6 @@ const el = {
   alreadyClearedCancel: document.getElementById('alreadyClearedCancel'),
   alreadyClearedScan: document.getElementById('alreadyClearedScan'),
 };
-
-const ctx = el.mapCanvas ? el.mapCanvas.getContext('2d') : null;
 
 function pill(status) {
   el.overallStatus.textContent = String(status || 'idle').toUpperCase();
@@ -79,29 +76,21 @@ function loadTheme() {
   setTheme(prefersDark ? 'dark' : 'light');
 }
 
-function drawMap(defects = []) {
-  if (!ctx || !el.mapCanvas) return;
-  const w = el.mapCanvas.width;
-  const h = el.mapCanvas.height;
-  ctx.clearRect(0, 0, w, h);
-  ctx.fillStyle = '#edf5ee';
-  ctx.fillRect(0, 0, w, h);
-  ctx.strokeStyle = '#7aa585';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.ellipse(w / 2, h / 2, 180, 110, 0, 0, Math.PI * 2);
-  ctx.stroke();
-  defects.forEach((defect, index) => {
-    const x = w / 2 + defect.x * 125;
-    const y = h / 2 + defect.y * 85;
-    ctx.beginPath();
-    ctx.fillStyle = defect.depth === 'subsurface' ? '#b44343' : '#2f8f5b';
-    ctx.arc(x, y, 8, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 11px Arial';
-    ctx.fillText(String(index + 1), x - 3, y + 4);
-  });
+function updateVisualization(defects = []) {
+  // Update 3D pot visualization with defects
+  if (window.pot3d) {
+    // Transform 2D defect coordinates to 3D format for the pot
+    const defects3d = defects.map((defect, index) => ({
+      id: index + 1,
+      x: defect.x || 0,
+      y: defect.y || 0,
+      z: 0.5,
+      depth: defect.depth || 'surface',
+      confidence: defect.confidence || 0.5,
+      material: defect.material || 'Unknown',
+    }));
+    window.pot3d.updateDefects(defects3d);
+  }
 }
 
 function renderSensors(sensors = []) {
@@ -137,7 +126,7 @@ function renderDefects(defects = []) {
   el.surfaceCount.textContent = surface;
   el.subsurfaceCount.textContent = subsurface;
   el.highestConfidence.textContent = highest ? `${(highest * 100).toFixed(0)}%` : '--';
-  drawMap(defects);
+  updateVisualization(defects);
 }
 
 function renderHistory(history = []) {

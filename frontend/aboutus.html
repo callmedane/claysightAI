@@ -17,38 +17,33 @@
 </head>
 <body>
   <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="logo-mark">
-          <img src="/assets/img/logo.png" alt="Greenware Logo" />
+    <!-- Top Navbar -->
+    <nav class="topbar">
+      <div class="topbar-left">
+        <div class="brand-horizontal">
+          <div class="logo-mark">
+            <img src="/assets/img/logo.png" alt="Greenware Logo" />
+          </div>
+          <div class="brand-text-horizontal">
+            <h1>ClaySight AI</h1>
+            <p>Greenware Inspection System</p>
+          </div>
         </div>
-        <div class="brand-text">
-          <h1>ClaySight AI</h1>
-          <p>Greenware Inspection System</p>
-        </div>
       </div>
 
-      <div class="project-title-box">
-        <span class="eyebrow">Team 2</span>
-        <strong>Multimodal Sensor Fusion for Greenware Defect Detection</strong>
+      <div class="topbar-center">
+        <nav class="nav-menu-horizontal">
+          <a href="/intro.html" class="nav-link">Introduction</a>
+          <a href="/dashboard.html" class="nav-link">Dashboard</a>
+          <a href="/aboutus.html" class="nav-link active">About Us</a>
+          <a href="/developer.html" class="nav-link">Developer Info</a>
+        </nav>
       </div>
 
-      <nav class="nav-menu">
-        <a href="/" class="nav-link">Dashboard</a>
-        <a href="/aboutus.html" class="nav-link active">About Us</a>
-        <a href="/developer.html" class="nav-link">Developer Info</a>
-      </nav>
-
-      <div class="status-box">
-        <span>Section</span>
-        <strong>Project Information</strong>
+      <div class="topbar-right">
+        <button id="themeToggle" class="btn tertiary theme-toggle" type="button" title="Toggle dark/light mode">🌙</button>
       </div>
-
-      <div class="status-box">
-        <span>Project Type</span>
-        <strong>Project Design</strong>
-      </div>
-    </aside>
+    </nav>
 
     <main class="content">
       <header class="hero card">

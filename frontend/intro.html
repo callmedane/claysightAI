@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction | ClaySight AI</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+
+  <script>
+    (function() {
+      const saved = localStorage.getItem('claysight-theme');
+      const theme =
+        (saved === 'dark' || saved === 'light')
+          ? saved
+          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+      document.documentElement.classList.add(`theme-${theme}`);
+    })();
+  </script>
+
+  <script src="/config.js"></script>
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Navbar -->
+    <nav class="topbar">
+      <div class="topbar-left">
+        <div class="brand-horizontal">
+          <div class="logo-mark">
+            <img src="/assets/img/logo.png" alt="ClaySight AI Logo" />
+          </div>
+          <div class="brand-text-horizontal">
+            <h1>ClaySight AI</h1>
+            <p>Greenware Inspection System</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar-center">
+        <nav class="nav-menu-horizontal">
+          <a href="/intro.html" class="nav-link active">Introduction</a>
+          <a href="/dashboard.html" class="nav-link">Dashboard</a>
+          <a href="/aboutus.html" class="nav-link">About Us</a>
+          <a href="/developer.html" class="nav-link">Developer Info</a>
+        </nav>
+      </div>
+
+      <div class="topbar-right">
+        <button id="themeToggle" class="btn tertiary theme-toggle" type="button" title="Toggle dark/light mode">🌙</button>
+      </div>
+    </nav>
+
+    <main class="content intro-page">
+      <!-- Hero Section -->
+      <section class="intro-hero-section">
+        <div class="intro-hero-content">
+          <div class="intro-hero-badge"> Team 2 Project Design 1</div>
+          <h1 class="intro-title">ClaySight AI</h1>
+          <p class="intro-tagline">Intelligent Defect Detection for Pottery & Ceramics</p>
+          <p class="intro-hero-description">
+            Advanced sensor fusion technology meets practical quality control. Detect defects early, reduce waste, and guarantee excellence in every piece—all on a local, offline-ready system.
+          </p>
+          <div class="intro-cta-buttons">
+            <a href="/dashboard.html" class="btn primary btn-lg">
+              <span class="btn-icon">→</span> Start Inspecting
+            </a>
+            <a href="/aboutus.html" class="btn secondary btn-lg">Learn More</a>
+          </div>
+        </div>
+        <div class="intro-hero-visual">
+          <div class="hero-visual-box">
+            <div class="visual-icon">🔍</div>
+            <div class="visual-text">Real-Time Defect Detection</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose ClaySight -->
+      <section class="intro-why-section">
+        <h2>Why ClaySight AI?</h2>
+        <div class="why-cards-grid">
+          <div class="card why-card">
+            <div class="why-icon">⚡</div>
+            <h3>Lightning Fast</h3>
+            <p>Real-time inspection and analysis. Get results in seconds, not hours.</p>
+          </div>
+          <div class="card why-card">
+            <div class="why-icon">📊</div>
+            <h3>Data Driven</h3>
+            <p>Comprehensive sensor fusion from thermal, optical, and structural inputs.</p>
+          </div>
+          <div class="card why-card">
+            <div class="why-icon">🛡️</div>
+            <h3>Privacy First</h3>
+            <p>All data stored locally. Zero cloud dependencies, complete control.</p>
+          </div>
+          <div class="card why-card">
+            <div class="why-icon">🔧</div>
+            <h3>Easy to Deploy</h3>
+            <p>Run on Raspberry Pi or any local system. Minimal infrastructure needed.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Features -->
+      <section class="card intro-features-section">
+        <div class="section-header">
+          <h2>Powerful Features</h2>
+          <p class="section-subtitle">Everything you need for professional inspection</p>
+        </div>
+
+        <div class="intro-feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Dual-Depth Analysis</h3>
+            <p>Detects both surface defects and subsurface flaws that could compromise quality.</p>
+            <ul class="feature-points">
+              <li>Surface crack detection</li>
+              <li>Internal void identification</li>
+              <li>Structural integrity assessment</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <h3>Intuitive Dashboard</h3>
+            <p>Clean, professional interface designed for production environments.</p>
+            <ul class="feature-points">
+              <li>Real-time status monitoring</li>
+              <li>Visual defect mapping</li>
+              <li>Detailed scan history</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌡️</div>
+            <h3>Multimodal Sensors</h3>
+            <p>Combines multiple sensing technologies for comprehensive analysis.</p>
+            <ul class="feature-points">
+              <li>Thermal imaging</li>
+              <li>Optical analysis</li>
+              <li>Structural scanning</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">💾</div>
+            <h3>Local Storage</h3>
+            <p>Keep all data on your local system for security and reliability.</p>
+            <ul class="feature-points">
+              <li>SQLite database</li>
+              <li>Offline operation</li>
+              <li>Complete audit trail</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works -->
+      <section class="intro-workflow-section">
+        <h2>How It Works</h2>
+        <div class="workflow-timeline">
+          <div class="workflow-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Initialize</h3>
+              <p>Set up sensors and calibrate the system</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>Scan</h3>
+              <p>Place greenware and start inspection</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Analyze</h3>
+              <p>AI processes multimodal sensor data</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h3>Review</h3>
+              <p>View results and recommendations</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Technology Stack -->
+      <section class="intro-tech-section">
+        <h2>Built with Modern Technology</h2>
+        <div class="tech-stack-grid">
+          <div class="card tech-stack-item">
+            <h3>Frontend</h3>
+            <p class="tech-description">HTML5, CSS3, JavaScript</p>
+            <p class="tech-detail">Responsive design, real-time updates</p>
+          </div>
+          <div class="card tech-stack-item">
+            <h3>Backend</h3>
+            <p class="tech-description">FastAPI (Python)</p>
+            <p class="tech-detail">High-performance API, async processing</p>
+          </div>
+          <div class="card tech-stack-item">
+            <h3>Database</h3>
+            <p class="tech-description">SQLite</p>
+            <p class="tech-detail">Local storage, zero cloud dependency</p>
+          </div>
+          <div class="card tech-stack-item">
+            <h3>Deployment</h3>
+            <p class="tech-description">Raspberry Pi Compatible</p>
+            <p class="tech-detail">Edge computing ready</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="intro-cta-section">
+        <h2>Ready to Improve Your Quality Control?</h2>
+        <p>Start inspecting with ClaySight AI today. Fast, reliable, and built for professionals.</p>
+        <div class="cta-buttons-group">
+          <a href="/dashboard.html" class="btn primary btn-lg">Open Dashboard</a>
+          <a href="/aboutus.html" class="btn secondary btn-lg">Meet the Team</a>
+        </div>
+      </section>
+
+      <!-- Footer Section -->
+      <section class="intro-footer-section">
+        <div class="footer-content">
+          <h3>About This Project</h3>
+          <p>
+            ClaySight AI is a student engineering project that demonstrates the power of sensor fusion and local AI 
+            for practical manufacturing applications. Combining embedded systems expertise with modern web technologies, 
+            we've created a solution that brings professional-grade defect detection to small-scale production environments.
+          </p>
+          <div class="footer-stats">
+            <div class="stat-item">
+              <strong>Team 2</strong>
+              <span>Computer Engineering Project Design</span>
+            </div>
+            <div class="stat-item">
+              <strong>Offline</strong>
+              <span>Fully local operation</span>
+            </div>
+            <div class="stat-item">
+              <strong>Open</strong>
+              <span>Student engineering project</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

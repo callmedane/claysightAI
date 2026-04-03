@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="0;url=/intro.html" />
-  <title>ClaySight AI</title>
+  <title>ClaySight AI - Inspection Dashboard</title>
   <link rel="stylesheet" href="/assets/styles.css" />
   <script>
     (function() {
@@ -12,31 +11,80 @@
       const theme = (saved === 'dark' || saved === 'light') ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.classList.add(`theme-${theme}`);
     })();
-    // Redirect to intro page
-    window.location.href = '/intro.html';
   </script>
   <script src="/config.js"></script>
   <script src="/assets/app.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="/assets/pot-3d-visualization.js" defer></script>
 </head>
 <body>
-  <p>Redirecting to intro page...</p>
-</body>
-</html>
-      <button id="refreshBtn" class="btn secondary">Refresh</button>
-    </aside>
+  <div class="app-shell">
+    <!-- Top Navbar -->
+    <nav class="topbar">
+      <div class="topbar-left">
+        <div class="brand-horizontal">
+          <div class="logo-mark">
+            <img src="/assets/img/logo.png" alt="Greenware Logo" />
+          </div>
+          <div class="brand-text-horizontal">
+            <h1>ClaySight AI</h1>
+            <p>Greenware Inspection System</p>
+          </div>
+        </div>
+      </div>
 
-    <main class="content">
-      <header class="hero card">
-        <div>
-          <h2>Inspection Dashboard</h2>
-          <p>Real-time monitoring of greenware defect detection and quality assessment</p>
+      <div class="topbar-center">
+        <nav class="nav-menu-horizontal">
+          <a href="/intro.html" class="nav-link">Introduction</a>
+          <a href="/dashboard.html" class="nav-link active">Dashboard</a>
+          <a href="/aboutus.html" class="nav-link">About Us</a>
+          <a href="/developer.html" class="nav-link">Developer Info</a>
+        </nav>
+      </div>
+
+      <div class="topbar-right">
+        <button id="themeToggle" class="btn tertiary theme-toggle" type="button" title="Toggle dark/light mode">🌙</button>
+      </div>
+    </nav>
+
+    <main class="content dashboard-content">
+      <!-- System Status Card -->
+      <section class="card dashboard-status-card">
+        <div class="status-card-header">
+          <div class="status-card-title">
+            <span class="eyebrow">Inspection Dashboard</span>
+            <h3>Real-time monitoring of greenware defect detection and quality assessment</h3>
+          </div>
+          <div class="status-card-badges">
+            <span id="overallStatus" class="pill idle">IDLE</span>
+            <span class="pill neutral">Offline-ready</span>
+          </div>
         </div>
-        <div class="hero-badges">
-          <span id="overallStatus" class="pill idle">IDLE</span>
-          <span class="pill neutral">Offline-ready</span>
-          <button id="themeToggle" class="btn tertiary theme-toggle" type="button" title="Toggle dark/light mode">🌙</button>
+        
+        <div class="status-card-grid">
+          <div class="status-card-item">
+            <span class="status-label">Backend</span>
+            <strong id="backendState" class="status-value">Checking...</strong>
+          </div>
+          <div class="status-card-item">
+            <span class="status-label">Database</span>
+            <strong id="databaseState" class="status-value">Checking...</strong>
+          </div>
+          <div class="status-card-item">
+            <span class="status-label">Model</span>
+            <strong id="modelState" class="status-value">Checking...</strong>
+          </div>
+          <div class="status-card-item">
+            <span class="status-label">Decision</span>
+            <strong id="decisionLabel" class="status-value">Awaiting Scan</strong>
+          </div>
         </div>
-      </header>
+
+        <div class="status-card-actions">
+          <button id="scanBtn" class="btn primary">Start Scan</button>
+          <button id="refreshBtn" class="btn secondary">Refresh</button>
+        </div>
+      </section>
 
       <section class="stats-grid">
         <article class="card"><span class="label">Debris Found</span><strong id="debrisCount">0</strong></article>
@@ -47,8 +95,14 @@
 
       <section class="two-col">
         <article class="card">
-          <div class="card-head"><h3>2D Defect Map</h3><span class="muted">Top view</span></div>
-          <canvas id="mapCanvas" width="520" height="300"></canvas>
+          <div class="card-head">
+            <h3>3D Pot Visualization</h3>
+            <span class="muted">Interactive 3D model with detected defects</span>
+          </div>
+          <div id="potVisualization3D" class="pot-3d-container"></div>
+          <div class="pot-3d-controls">
+            <small>💡 Drag to rotate • Scroll to zoom • Red = Surface • Orange = Subsurface</small>
+          </div>
         </article>
         <article class="card">
           <div class="card-head"><h3>Latest Defects</h3><span class="muted">Most recent scan</span></div>
