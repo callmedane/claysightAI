@@ -23,6 +23,19 @@ const el = {
   avgDefects: document.getElementById('avgDefects'),
   mapCanvas: document.getElementById('mapCanvas'),
   themeToggle: document.getElementById('themeToggle'),
+  clearHistoryBtn: document.getElementById('clearHistoryBtn'),
+  // Modal elements
+  deleteModal: document.getElementById('deleteModal'),
+  deleteModalNo: document.getElementById('deleteModalNo'),
+  deleteModalConfirm: document.getElementById('deleteModalConfirm'),
+  clearModal: document.getElementById('clearModal'),
+  clearModalNo: document.getElementById('clearModalNo'),
+  clearModalConfirm: document.getElementById('clearModalConfirm'),
+  clearSuccessModal: document.getElementById('clearSuccessModal'),
+  clearSuccessBtn: document.getElementById('clearSuccessBtn'),
+  alreadyClearedModal: document.getElementById('alreadyClearedModal'),
+  alreadyClearedCancel: document.getElementById('alreadyClearedCancel'),
+  alreadyClearedScan: document.getElementById('alreadyClearedScan'),
 };
 
 const ctx = el.mapCanvas ? el.mapCanvas.getContext('2d') : null;
@@ -130,7 +143,7 @@ function renderDefects(defects = []) {
 function renderHistory(history = []) {
   el.historyBody.innerHTML = '';
   if (!history.length) {
-    el.historyBody.innerHTML = '<tr><td colspan="4">No data yet.</td></tr>';
+    el.historyBody.innerHTML = '<tr><td colspan="5">No data yet.</td></tr>';
     return;
   }
   history.forEach((item) => {
@@ -140,9 +153,162 @@ function renderHistory(history = []) {
       <td>${item.overall_status || '--'}</td>
       <td>${item.debris_count ?? 0}</td>
       <td>${item.created_at ? new Date(item.created_at).toLocaleString() : '--'}</td>
+      <td><button class="btn-delete" data-scan-id="${item.scan_id}" title="Delete this record">Delete</button></td>
     `;
     el.historyBody.appendChild(tr);
+    
+    const deleteBtn = tr.querySelector('.btn-delete');
+    deleteBtn.addEventListener('click', () => deleteHistoryItem(item.scan_id));
   });
+}
+
+async function deleteHistoryItem(scanId) {
+  let pendingScanId = scanId;
+  
+  el.deleteModal.classList.add('show');
+  
+  const handleConfirm = async () => {
+    cleanup();
+    try {
+      await request(`/api/history/${pendingScanId}`, { method: 'DELETE' });
+      await refreshAll();
+    } catch (error) {
+      console.error(error);
+      alert('Failed to delete record. Check the backend terminal output.');
+    }
+  };
+  
+  const handleCancel = () => {
+    cleanup();
+  };
+  
+  const cleanup = () => {
+    el.deleteModal.classList.remove('show');
+    el.deleteModalConfirm.removeEventListener('click', handleConfirm);
+    el.deleteModalNo.removeEventListener('click', handleCancel);
+    document.removeEventListener('keydown', handleEscape);
+  };
+  
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') handleCancel();
+  };
+  
+  el.deleteModalConfirm.addEventListener('click', handleConfirm);
+  el.deleteModalNo.addEventListener('click', handleCancel);
+  document.addEventListener('keydown', handleEscape);
+}
+
+async function clearAllHistory() {
+  el.clearModal.classList.add('show');
+  
+  const handleConfirm = async () => {
+    cleanup();
+    try {
+      await request('/api/history/clear', { method: 'DELETE' });
+      resetStats();
+      await refreshAll();
+      // Show success modal
+      showClearSuccessModal();
+    } catch (error) {
+      console.error(error);
+      alert('Failed to clear history. Check the backend terminal output.');
+    }
+  };
+  
+  const handleCancel = () => {
+    cleanup();
+  };
+  
+  const cleanup = () => {
+    el.clearModal.classList.remove('show');
+    el.clearModalConfirm.removeEventListener('click', handleConfirm);
+    el.clearModalNo.removeEventListener('click', handleCancel);
+    document.removeEventListener('keydown', handleEscape);
+  };
+  
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') handleCancel();
+  };
+  
+  el.clearModalConfirm.addEventListener('click', handleConfirm);
+  el.clearModalNo.addEventListener('click', handleCancel);
+  document.addEventListener('keydown', handleEscape);
+}
+
+function showClearSuccessModal() {
+  el.clearSuccessModal.classList.add('show');
+  
+  const handleClose = () => {
+    cleanup();
+  };
+  
+  const cleanup = () => {
+    el.clearSuccessModal.classList.remove('show');
+    el.clearSuccessBtn.removeEventListener('click', handleClose);
+    document.removeEventListener('keydown', handleEscape);
+  };
+  
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') handleClose();
+  };
+  
+  el.clearSuccessBtn.addEventListener('click', handleClose);
+  document.addEventListener('keydown', handleEscape);
+}
+
+function showAlreadyClearedModal() {
+  el.alreadyClearedModal.classList.add('show');
+  
+  const handleCancel = () => {
+    cleanup();
+  };
+  
+  const handleStartScan = async () => {
+    cleanup();
+    // Trigger scan
+    try {
+      el.scanBtn.disabled = true;
+      el.scanBtn.textContent = 'Scanning...';
+      await request('/api/scan/start', { method: 'POST' });
+      await refreshAll();
+    } catch (error) {
+      console.error(error);
+      alert('Scan failed. Check the backend terminal output.');
+    } finally {
+      el.scanBtn.disabled = false;
+      el.scanBtn.textContent = 'Start Scan';
+    }
+  };
+  
+  const cleanup = () => {
+    el.alreadyClearedModal.classList.remove('show');
+    el.alreadyClearedCancel.removeEventListener('click', handleCancel);
+    el.alreadyClearedScan.removeEventListener('click', handleStartScan);
+    document.removeEventListener('keydown', handleEscape);
+  };
+  
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') handleCancel();
+  };
+  
+  el.alreadyClearedCancel.addEventListener('click', handleCancel);
+  el.alreadyClearedScan.addEventListener('click', handleStartScan);
+  document.addEventListener('keydown', handleEscape);
+}
+
+function resetStats() {
+  el.debrisCount.textContent = '0';
+  el.moistureValue.textContent = '--';
+  el.dryingValue.textContent = '--';
+  el.recommendation.textContent = 'No scan yet.';
+  el.surfaceCount.textContent = '0';
+  el.subsurfaceCount.textContent = '0';
+  el.highestConfidence.textContent = '--';
+  el.totalScans.textContent = '0';
+  el.passRate.textContent = '--';
+  el.avgDefects.textContent = '--';
+  pill('idle');
+  renderDefects([]);
 }
 
 async function request(path, options = {}) {
@@ -209,6 +375,24 @@ if (el.scanBtn) {
 }
 
 if (el.refreshBtn) el.refreshBtn.addEventListener('click', refreshAll);
+if (el.clearHistoryBtn) el.clearHistoryBtn.addEventListener('click', async () => {
+  try {
+    // Check if history exists first
+    const history = await request('/api/history?limit=1');
+    const hasHistory = history && history.length > 0;
+    
+    if (!hasHistory) {
+      // History already empty, show already cleared modal directly
+      showAlreadyClearedModal();
+    } else {
+      // History exists, show confirmation modal
+      clearAllHistory();
+    }
+  } catch (error) {
+    console.error(error);
+    alert('Failed to check history. Check the backend terminal output.');
+  }
+});
 if (el.themeToggle) {
   el.themeToggle.addEventListener('click', toggleTheme);
 }

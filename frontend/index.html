@@ -82,8 +82,8 @@
 
       <section class="two-col">
         <article class="card">
-          <div class="card-head"><h3>Sensor Status</h3><span class="muted">Ready for integration</span></div>
-          <div id="sensorGrid" class="sensor-grid"></div>
+          <div class="card-head"><h3>2D Defect Map</h3><span class="muted">Top view</span></div>
+          <canvas id="mapCanvas" width="520" height="300"></canvas>
         </article>
         <article class="card">
           <div class="card-head"><h3>Latest Defects</h3><span class="muted">Most recent scan</span></div>
@@ -93,8 +93,8 @@
 
       <section class="two-col">
         <article class="card">
-          <div class="card-head"><h3>2D Defect Map</h3><span class="muted">Top view</span></div>
-          <canvas id="mapCanvas" width="520" height="300"></canvas>
+          <div class="card-head"><h3>Sensor Status</h3><span class="muted">Ready for integration</span></div>
+          <div id="sensorGrid" class="sensor-grid"></div>
         </article>
         <article class="card">
           <div class="card-head"><h3>Summary</h3><span class="muted">Stored locally</span></div>
@@ -110,15 +110,87 @@
       </section>
 
       <section class="card">
-        <div class="card-head"><h3>Inspection History</h3><span class="muted">Latest records</span></div>
+        <div class="card-head">
+          <div><h3>Inspection History</h3><span class="muted">Latest records</span></div>
+          <div class="history-actions">
+            <button id="clearHistoryBtn" class="btn secondary" title="Clear all inspection history">Clear All</button>
+          </div>
+        </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Scan ID</th><th>Status</th><th>Debris</th><th>Created</th></tr></thead>
-            <tbody id="historyBody"><tr><td colspan="4">No data yet.</td></tr></tbody>
+            <thead><tr><th>Scan ID</th><th>Status</th><th>Debris</th><th>Created</th><th>Action</th></tr></thead>
+            <tbody id="historyBody"><tr><td colspan="5">No data yet.</td></tr></tbody>
           </table>
         </div>
       </section>
     </main>
+  </div>
+
+  <!-- Modal for Delete Confirmation -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Delete History Record</h3>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this history record?</p>
+        <p class="modal-warning">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="deleteModalNo" class="btn secondary">No</button>
+        <button id="deleteModalConfirm" class="btn primary delete-action">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Clear Confirmation -->
+  <div id="clearModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Clear All History</h3>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to clear all inspection history and reset the dashboard?</p>
+        <p class="modal-warning">You will need to make a new scan to generate fresh data.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="clearModalNo" class="btn secondary">No</button>
+        <button id="clearModalConfirm" class="btn primary delete-action">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Clear Success -->
+  <div id="clearSuccessModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>History Cleared</h3>
+      </div>
+      <div class="modal-body">
+        <p>All inspection history has been cleared successfully.</p>
+        <p class="modal-warning">Your dashboard is now reset. Start a new scan to generate fresh statistics and inspection data.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="clearSuccessBtn" class="btn primary">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Already Cleared History -->
+  <div id="alreadyClearedModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>No History to Clear</h3>
+      </div>
+      <div class="modal-body">
+        <p>Your inspection history is already cleared.</p>
+        <p class="modal-warning">Start a new scan to generate fresh statistics and inspection data.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="alreadyClearedCancel" class="btn secondary">Cancel</button>
+        <button id="alreadyClearedScan" class="btn primary">Start Scan</button>
+      </div>
+    </div>
   </div>
 </body>
 </html>

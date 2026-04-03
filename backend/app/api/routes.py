@@ -81,6 +81,19 @@ def history(limit: int = 20):
     return storage_service.list_scans(limit=limit)
 
 
+@router.delete('/history/clear')
+def clear_all_history():
+    count = storage_service.clear_all_scans()
+    return {'message': f'Cleared {count} scan records.', 'deleted_count': count}
+
+
+@router.delete('/history/{scan_id}')
+def delete_history_item(scan_id: str):
+    if storage_service.delete_scan(scan_id):
+        return {'message': f'Scan {scan_id} deleted successfully.'}
+    raise HTTPException(status_code=404, detail='Scan not found.')
+
+
 @router.get('/reports/summary')
 def report_summary():
     summary = storage_service.stats()

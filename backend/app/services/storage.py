@@ -79,3 +79,17 @@ class StorageService:
             'pass_rate': round((passed / total) * 100, 1),
             'avg_defects': round(sum(defects) / total, 2),
         }
+
+    def delete_scan(self, scan_id: str) -> bool:
+        """Delete a specific scan record. Returns True if deleted, False if not found."""
+        with closing(self._connect()) as conn:
+            cursor = conn.execute('DELETE FROM scans WHERE scan_id = ?', (scan_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+
+    def clear_all_scans(self) -> int:
+        """Delete all scan records. Returns the number of deleted records."""
+        with closing(self._connect()) as conn:
+            cursor = conn.execute('DELETE FROM scans')
+            conn.commit()
+            return cursor.rowcount
