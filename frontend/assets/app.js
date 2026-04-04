@@ -385,5 +385,18 @@ if (el.clearHistoryBtn) el.clearHistoryBtn.addEventListener('click', async () =>
 if (el.themeToggle) {
   el.themeToggle.addEventListener('click', toggleTheme);
 }
+
+// Navbar shrinking effect on scroll
+const topbar = document.querySelector('.topbar');
+if (topbar) {
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 0) {
+      topbar.classList.add('shrunk');
+    } else {
+      topbar.classList.remove('shrunk');
+    }
+  });
+}
+
 loadTheme();
 refreshAll();

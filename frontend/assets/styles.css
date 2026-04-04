@@ -80,6 +80,7 @@ body {
   width: 100%;
   min-height: 100vh;
   flex: 1;
+  margin-top: 56px;
 }
 
 /* TOP NAVBAR */
@@ -92,6 +93,40 @@ body {
   gap: 24px;
   border-bottom: 1px solid rgba(168, 216, 186, 0.2);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Shrunk navbar state */
+.topbar.shrunk {
+  padding: 6px 20px;
+  gap: 16px;
+}
+
+.topbar.shrunk .logo-mark {
+  width: 32px;
+  height: 32px;
+}
+
+.topbar.shrunk .brand-text-horizontal h1 {
+  font-size: 0.9rem;
+}
+
+.topbar.shrunk .brand-text-horizontal p {
+  font-size: 0.65rem;
+}
+
+.topbar.shrunk .nav-menu-horizontal {
+  gap: 12px;
+}
+
+.topbar.shrunk .nav-link {
+  font-size: 0.85rem;
+  padding: 6px 10px;
 }
 
 .topbar-left {
@@ -1716,6 +1751,51 @@ canvas {
   color: var(--text-soft);
 }
 
+/* Copyright Footer */
+.copyright-footer {
+  background: var(--surface);
+  border-top: 2px solid var(--border);
+  padding: 32px 24px;
+  margin-top: 64px;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.copyright-footer.card {
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  background: var(--surface);
+  margin: 64px 0 0 0;
+  padding: 32px 24px;
+}
+
+.copyright-footer .copyright-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0;
+}
+
+.copyright-content p {
+  margin: 0;
+  color: var(--text);
+}
+
+.copyright-content p:first-child {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.copyright-info {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
 /* Responsive Design */
 
 /* Topbar Responsive */
@@ -2191,6 +2271,29 @@ canvas {
 
   .intro-cta-section h2 {
     font-size: 1.4rem;
+  }
+
+  .app-footer {
+    padding: 24px 16px;
+    margin-top: 32px;
+  }
+
+  .app-footer .footer-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .footer-copyright p {
+    font-size: 0.85rem;
+  }
+
+  .footer-info {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .footer-item {
+    padding: 8px 0;
   }
 }
 /* =========================
