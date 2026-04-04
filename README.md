@@ -38,7 +38,7 @@ Open a terminal in the project root, then run:
 ### 1) Backend + frontend in one server
 ```powershell
 cd backend
-py -3.12 -m venv .venv
+py -3.12 -m venv .venv (depending on the Python version you have)
 .venv\Scripts\activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
