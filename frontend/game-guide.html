@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Guide | ClaySight AI</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script>
+    (function() {
+      const saved = localStorage.getItem('claysight-theme');
+      const theme = (saved === 'dark' || saved === 'light') ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.classList.add(`theme-${theme}`);
+    })();
+  </script>
+  <script src="/config.js"></script>
+  <script src="/assets/app.js" defer></script>
+  <script src="/assets/guide-game.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Navbar -->
+    <nav class="topbar">
+      <div class="topbar-left">
+        <div class="brand-horizontal">
+          <div class="logo-mark">
+            <img src="/assets/img/logo.png" alt="ClaySight AI Logo" />
+          </div>
+          <div class="brand-text-horizontal">
+            <h1>ClaySight AI</h1>
+            <p>Greenware Inspection System</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar-center">
+        <nav class="nav-menu-horizontal">
+          <a href="/intro.html" class="nav-link">Introduction</a>
+          <a href="/game-guide.html" class="nav-link active">Game Guide</a>
+          <a href="/dashboard.html" class="nav-link">Dashboard</a>
+          <a href="/aboutus.html" class="nav-link">About Us</a>
+          <a href="/developer.html" class="nav-link">Developer Info</a>
+        </nav>
+      </div>
+
+      <div class="topbar-right">
+        <button id="themeToggle" class="btn tertiary theme-toggle" type="button" title="Toggle dark/light mode">🌙</button>
+      </div>
+    </nav>
+
+    <main class="content game-content">
+      <!-- ClaySight Interactive Game -->
+      <div id="guideOverlay" class="game-container" style="position: static; background: transparent; padding: 0;">
+        <div class="game-shell" style="max-width: 100%; border-radius: 0; box-shadow: none; margin: 0;">
+          <!-- Game Header with Score and Progress -->
+          <div class="game-header">
+            <div class="game-header-left">
+              <h1 class="game-title">🎮 ClaySight AI Inspection Mastery</h1>
+              <p class="game-subtitle">Learn the complete inspection workflow</p>
+            </div>
+            <div class="game-header-stats">
+              <div class="stat-item">
+                <span class="stat-label">Score</span>
+                <strong id="gameScore" class="stat-value">0</strong>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Accuracy</span>
+                <strong id="gameAccuracy" class="stat-value">0%</strong>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Streak</span>
+                <strong id="gameStreak" class="stat-value">0</strong>
+              </div>
+            </div>
+            <a href="/dashboard.html" class="btn secondary btn-icon" type="button" title="Go to Dashboard">
+              <span>→</span> Dashboard
+            </a>
+          </div>
+
+          <!-- Overall Progress Bar -->
+          <div class="game-progress-container">
+            <div class="progress-info">
+              <strong id="stageName" class="stage-name">Welcome</strong>
+              <span id="progressPercent" class="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar-wrapper">
+              <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="stage-indicators">
+              <div class="stage-indicator active" data-stage="intro">Intro</div>
+              <div class="stage-indicator" data-stage="stage1">Flow</div>
+              <div class="stage-indicator" data-stage="stage2">Tools</div>
+              <div class="stage-indicator" data-stage="stage3">Defects</div>
+              <div class="stage-indicator" data-stage="complete">Complete</div>
+            </div>
+          </div>
+
+          <!-- Intro Screen -->
+          <section id="guideIntroScreen" class="game-screen active">
+            <div class="game-intro-content">
+              <div class="intro-visual">
+                <div class="intro-icon-container">
+                  <div class="intro-icon">🔬</div>
+                  <div class="icon-ring"></div>
+                </div>
+              </div>
+              
+              <div class="intro-card card-elevated">
+                <h2>Welcome to Inspection Mastery!</h2>
+                <p class="intro-description">
+                  Master the complete ClaySight AI workflow in an interactive game. Learn through 3 engaging stages 
+                  and demonstrate your understanding of how we detect and classify defects in greenware.
+                </p>
+                
+                <div class="game-features">
+                  <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <div>
+                      <strong>Stage 1: Flow</strong>
+                      <p>Arrange inspection steps in correct order</p>
+                    </div>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon">🔧</span>
+                    <div>
+                      <strong>Stage 2: Tools</strong>
+                      <p>Identify the sensors and equipment used</p>
+                    </div>
+                  </div>
+                  <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <div>
+                      <strong>Stage 3: Defects</strong>
+                      <p>Classify defects by type and location</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="intro-actions">
+                  <button id="guideStartBtn" class="btn primary btn-large" type="button">
+                    <span class="btn-icon">🚀</span> Start Game
+                  </button>
+                  <button id="guideSkipBtn" class="btn secondary" type="button">Skip & Go to Dashboard</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stage 1: Flow Arrangement -->
+          <section id="guideStage1" class="game-screen">
+            <div class="stage-container">
+              <div class="stage-header">
+                <div class="stage-title-block">
+                  <span class="stage-badge stage-1">Stage 1/3</span>
+                  <h2>Arrange the Inspection Flow</h2>
+                  <p>Click the tiles in the correct order: Prepare → Scan → Analyze → Review</p>
+                </div>
+                <div class="stage-meta">
+                  <div class="meta-item">
+                    <span class="meta-label">Difficulty</span>
+                    <span class="meta-value difficulty-easy">Easy</span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">Max Points</span>
+                    <span class="meta-value">300</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage-content">
+                <div class="flow-game">
+                  <div class="flow-instruction">
+                    <span class="instruction-icon">💡</span>
+                    <span>Select tiles in the correct order below</span>
+                  </div>
+
+                  <div id="flowTiles" class="flow-tiles-grid">
+                    <button class="flow-tile tile-prepare" data-step="prepare" type="button">
+                      <span class="tile-icon">⚙️</span>
+                      <span class="tile-text">Prepare</span>
+                    </button>
+                    <button class="flow-tile tile-review" data-step="review" type="button">
+                      <span class="tile-icon">📋</span>
+                      <span class="tile-text">Review</span>
+                    </button>
+                    <button class="flow-tile tile-scan" data-step="scan" type="button">
+                      <span class="tile-icon">🔍</span>
+                      <span class="tile-text">Scan</span>
+                    </button>
+                    <button class="flow-tile tile-analyze" data-step="analyze" type="button">
+                      <span class="tile-icon">📊</span>
+                      <span class="tile-text">Analyze</span>
+                    </button>
+                  </div>
+
+                  <div class="flow-sequence">
+                    <div class="sequence-label">Your Order:</div>
+                    <div id="flowResult" class="flow-result">
+                      <span class="empty-state">Click tiles to build sequence...</span>
+                    </div>
+                  </div>
+
+                  <div class="flow-feedback">
+                    <strong>Status:</strong>
+                    <div id="flowFeedback" class="feedback-text neutral">Ready to start! Click a tile.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage-actions">
+                <button id="stage1Deselect" class="btn secondary" type="button" disabled>
+                  <span class="btn-icon">✕</span> Deselect Last
+                </button>
+                <button id="stage1Reset" class="btn secondary" type="button">
+                  <span class="btn-icon">↻</span> Reset All
+                </button>
+                <button id="stage1Next" class="btn primary" type="button" disabled>
+                  <span class="btn-icon">→</span> Next Stage
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stage 2: Tool Selection -->
+          <section id="guideStage2" class="game-screen">
+            <div class="stage-container">
+              <div class="stage-header">
+                <div class="stage-title-block">
+                  <span class="stage-badge stage-2">Stage 2/3</span>
+                  <h2>Select Inspection Tools</h2>
+                  <p>Choose all the relevant sensors and equipment (select 3 correct items, avoid wrong ones)</p>
+                </div>
+                <div class="stage-meta">
+                  <div class="meta-item">
+                    <span class="meta-label">Difficulty</span>
+                    <span class="meta-value difficulty-normal">Normal</span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">Max Points</span>
+                    <span class="meta-value">400</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage-content">
+                <div class="sensor-game">
+                  <div class="sensor-instruction">
+                    <span class="instruction-icon">💡</span>
+                    <span>Select all tools relevant to defect detection (3 correct, 3 decoys)</span>
+                  </div>
+
+                  <div id="sensorChoices" class="sensor-grid">
+                    <button class="sensor-choice" data-correct="true" type="button">
+                      <span class="sensor-icon">🌡️</span>
+                      <span class="sensor-name">Thermal Sensor</span>
+                      <span class="sensor-desc">Heat detection</span>
+                    </button>
+                    <button class="sensor-choice" data-correct="true" type="button">
+                      <span class="sensor-icon">📷</span>
+                      <span class="sensor-name">Optical Camera</span>
+                      <span class="sensor-desc">Visual analysis</span>
+                    </button>
+                    <button class="sensor-choice" data-correct="true" type="button">
+                      <span class="sensor-icon">📹</span>
+                      <span class="sensor-name">NoIR Camera</span>
+                      <span class="sensor-desc">Infrared imaging</span>
+                    </button>
+                    <button class="sensor-choice" data-correct="false" type="button">
+                      <span class="sensor-icon">🎮</span>
+                      <span class="sensor-name">Cloud Gaming GPU</span>
+                      <span class="sensor-desc">Not used</span>
+                    </button>
+                    <button class="sensor-choice" data-correct="false" type="button">
+                      <span class="sensor-icon">🔊</span>
+                      <span class="sensor-name">Speaker System</span>
+                      <span class="sensor-desc">Not used</span>
+                    </button>
+                    <button class="sensor-choice" data-correct="false" type="button">
+                      <span class="sensor-icon">💡</span>
+                      <span class="sensor-name">RGB Room Light</span>
+                      <span class="sensor-desc">Not used</span>
+                    </button>
+                  </div>
+
+                  <div class="sensor-progress">
+                    <div class="progress-label">
+                      <span>Correct Selected:</span>
+                      <span id="sensorProgress" class="progress-count">0/3</span>
+                    </div>
+                    <div class="progress-bar-small">
+                      <div id="sensorProgressBar" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                  </div>
+
+                  <div class="sensor-feedback">
+                    <strong>Feedback:</strong>
+                    <div id="sensorFeedback" class="feedback-text neutral">Select the inspection tools used</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage-actions">
+                <button id="stage2Deselect" class="btn secondary btn-sm" type="button" disabled>
+                  <span class="btn-icon">↶</span> Deselect Last
+                </button>
+                <button id="stage2Reset" class="btn secondary" type="button">
+                  <span class="btn-icon">↻</span> Reset All
+                </button>
+                <button id="stage2Back" class="btn secondary" type="button">
+                  <span class="btn-icon">←</span> Back
+                </button>
+                <button id="stage2Next" class="btn primary" type="button" disabled>
+                  <span class="btn-icon">→</span> Next Stage
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stage 3: Defect Sorting -->
+          <section id="guideStage3" class="game-screen">
+            <div class="stage-container">
+              <div class="stage-header">
+                <div class="stage-title-block">
+                  <span class="stage-badge stage-3">Stage 3/3</span>
+                  <h2>Classify Defects</h2>
+                  <p>Drag or click defects to sort them into Surface or Subsurface categories</p>
+                </div>
+                <div class="stage-meta">
+                  <div class="meta-item">
+                    <span class="meta-label">Difficulty</span>
+                    <span class="meta-value difficulty-hard">Hard</span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">Max Points</span>
+                    <span class="meta-value">500</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage-content">
+                <div class="defect-game">
+                  <div class="defect-instruction">
+                    <span class="instruction-icon">💡</span>
+                    <span>Select a defect card then send it to the correct category</span>
+                  </div>
+
+                  <div class="defect-layout">
+                    <div class="defect-pool-section">
+                      <h4 class="section-title">Defects to Sort</h4>
+                      <div id="defectCardsPool" class="defect-card-pool">
+                        <button class="defect-card" data-answer="surface" type="button">
+                          <span class="defect-icon">🔴</span>
+                          <span class="defect-text">Surface Crack</span>
+                          <span class="defect-hint">(Visible)</span>
+                        </button>
+                        <button class="defect-card" data-answer="subsurface" type="button">
+                          <span class="defect-icon">🟠</span>
+                          <span class="defect-text">Hidden Void</span>
+                          <span class="defect-hint">(Hidden)</span>
+                        </button>
+                        <button class="defect-card" data-answer="surface" type="button">
+                          <span class="defect-icon">🔴</span>
+                          <span class="defect-text">Edge Chip</span>
+                          <span class="defect-hint">(Visible)</span>
+                        </button>
+                        <button class="defect-card" data-answer="subsurface" type="button">
+                          <span class="defect-icon">🟠</span>
+                          <span class="defect-text">Internal Weakness</span>
+                          <span class="defect-hint">(Hidden)</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="defect-bins-section">
+                      <div class="defect-bin-container">
+                        <div class="bin-header">
+                          <span class="bin-icon">🔴</span>
+                          <h4>Surface Defects</h4>
+                          <span class="bin-count" id="surfaceCount">0</span>
+                        </div>
+                        <div id="surfaceBin" class="defect-bin"></div>
+                      </div>
+
+                      <div class="defect-bin-container">
+                        <div class="bin-header">
+                          <span class="bin-icon">🟠</span>
+                          <h4>Subsurface Defects</h4>
+                          <span class="bin-count" id="subsurfaceCount">0</span>
+                        </div>
+                        <div id="subsurfaceBin" class="defect-bin"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="defect-actions-inline">
+                    <button id="sendSurface" class="btn secondary btn-sm" type="button" disabled>
+                      <span class="btn-icon">→</span> Send to Surface
+                    </button>
+                    <button id="sendSubsurface" class="btn secondary btn-sm" type="button" disabled>
+                      <span class="btn-icon">→</span> Send to Subsurface
+                    </button>
+                  </div>
+
+                  <div class="defect-feedback">
+                    <strong>Status:</strong>
+                    <div id="defectFeedback" class="feedback-text neutral">Select a defect card first</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage-actions">
+                <button id="stage3Reset" class="btn secondary" type="button">
+                  <span class="btn-icon">↻</span> Reset All
+                </button>
+                <button id="stage3Back" class="btn secondary" type="button">
+                  <span class="btn-icon">←</span> Back
+                </button>
+                <button id="guideFinishBtn" class="btn primary" type="button" disabled>
+                  <span class="btn-icon">🏁</span> Finish Game
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Completion Screen -->
+          <section id="guideCompleteScreen" class="game-screen">
+            <div class="completion-container">
+              <div class="completion-card card-elevated">
+                <div class="completion-header">
+                  <div class="completion-icon" id="completionIcon">🎉</div>
+                  <h2>Inspection Mastery Achieved!</h2>
+                </div>
+
+                <div class="completion-stats-grid">
+                  <div class="stat-box">
+                    <div class="stat-big-number" id="finalScore">0</div>
+                    <div class="stat-big-label">Total Points</div>
+                  </div>
+                  <div class="stat-box">
+                    <div class="stat-big-number" id="finalAccuracy">0%</div>
+                    <div class="stat-big-label">Accuracy</div>
+                  </div>
+                  <div class="stat-box">
+                    <div class="stat-big-number" id="finalBadge">⭐</div>
+                    <div class="stat-big-label" id="finalBadgeText">Expert</div>
+                  </div>
+                </div>
+
+                <div class="completion-breakdown">
+                  <h3>Performance Breakdown</h3>
+                  <div class="breakdown-items">
+                    <div class="breakdown-item">
+                      <span class="breakdown-label">Stage 1: Flow</span>
+                      <span class="breakdown-score" id="score1">-</span>
+                    </div>
+                    <div class="breakdown-item">
+                      <span class="breakdown-label">Stage 2: Tools</span>
+                      <span class="breakdown-score" id="score2">-</span>
+                    </div>
+                    <div class="breakdown-item">
+                      <span class="breakdown-label">Stage 3: Defects</span>
+                      <span class="breakdown-score" id="score3">-</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="completion-summary">
+                  <p>You've successfully learned the complete ClaySight AI inspection workflow. You understand:</p>
+                  <ul class="summary-list">
+                    <li>✓ The correct sequence of preparation, scanning, analysis, and review</li>
+                    <li>✓ The multimodal sensors used for comprehensive defect detection</li>
+                    <li>✓ How to classify defects by location and characteristics</li>
+                  </ul>
+                </div>
+
+                <div class="completion-actions">
+                  <button id="goDashboardBtn" class="btn primary btn-large" type="button">
+                    <span class="btn-icon">📊</span> Go to Dashboard
+                  </button>
+                  <button id="replayGuideBtn" class="btn secondary" type="button">
+                    <span class="btn-icon">🔄</span> Play Again
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Override navigation buttons to work as a standalone page
+    document.addEventListener('DOMContentLoaded', function() {
+      const guideCloseBtn = document.getElementById('guideCloseBtn');
+      const goDashboardBtn = document.getElementById('goDashboardBtn');
+      const replayGuideBtn = document.getElementById('replayGuideBtn');
+      
+      if (guideCloseBtn) {
+        guideCloseBtn.addEventListener('click', function() {
+          window.location.href = '/dashboard.html';
+        });
+      }
+      
+      if (goDashboardBtn) {
+        goDashboardBtn.addEventListener('click', function() {
+          window.location.href = '/dashboard.html';
+        });
+      }
+      
+      if (replayGuideBtn) {
+        replayGuideBtn.addEventListener('click', function() {
+          localStorage.removeItem('claysight-guide-complete');
+          location.reload();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
