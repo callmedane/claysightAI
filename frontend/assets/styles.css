@@ -688,6 +688,51 @@ body {
   gap: 12px;
 }
 
+.two-col-expanded {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.summary-card-full {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 0.9fr;
+  gap: 12px;
+}
+
+/* Responsive two-col-expanded layout */
+@media (max-width: 1200px) {
+  .two-col-expanded {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .two-col-expanded {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive three-col layout (kept for backward compatibility) */
+@media (max-width: 1200px) {
+  .three-col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .three-col {
+    grid-template-columns: 1fr;
+  }
+}
+
 .card-head {
   display: flex;
   justify-content: space-between;
@@ -713,11 +758,75 @@ body {
 .sensor-grid,
 .summary-list {
   display: grid;
-  gap: 8px;
+  gap: 16px;
 }
 
 .sensor-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: auto;
+}
+
+/* Camera previews - maximized height to take full space */
+.sensor-grid .camera-preview {
+  grid-column: span 1;
+  min-height: 500px;
+}
+
+.sensor-grid .camera-item {
+  grid-column: span 1;
+}
+
+/* Non-camera sensor items appear below cameras */
+.sensor-grid .sensor-item:not(:has(.camera-preview)) {
+  grid-column: span 1;
+  min-height: auto;
+}
+
+/* Make camera previews larger on larger screens */
+@media (min-width: 1400px) {
+  .sensor-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  
+  .sensor-grid .camera-preview {
+    grid-column: span 1;
+    min-height: 550px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .sensor-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  
+  .sensor-grid .camera-preview {
+    grid-column: span 1;
+    min-height: 480px;
+  }
+}
+
+/* Tablet: cameras and sensors in 2 column layout */
+@media (max-width: 1023px) {
+  .sensor-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .sensor-grid .camera-preview {
+    grid-column: span 1;
+    min-height: 420px;
+  }
+}
+
+/* Mobile: single column */
+@media (max-width: 768px) {
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sensor-grid .camera-preview {
+    grid-column: span 1;
+    min-height: 360px;
+  }
 }
 
 .sensor-item,
@@ -727,6 +836,17 @@ body {
   border-radius: var(--radius-md);
   padding: 10px;
   color: var(--text);
+}
+
+/* Camera preview overrides sensor-item styling */
+.sensor-item .camera-preview {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.sensor-item .camera-preview .camera-info {
+  margin-top: 8px;
 }
 
 .sensor-item strong,
@@ -739,6 +859,397 @@ body {
 .sensor-item small {
   color: var(--text-soft);
   display: block;
+}
+
+/* SENSOR READINGS CARD STYLES */
+.sensor-readings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.reading-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: background-color 0.2s ease;
+}
+
+.reading-row:hover {
+  background: var(--surface);
+}
+
+.reading-icon {
+  font-size: 1.5rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.reading-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.reading-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.reading-status {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+}
+
+.reading-value {
+  text-align: right;
+  min-width: 80px;
+}
+
+.reading-primary {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.reading-unit {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+
+/* READINGS SUMMARY SECTION */
+.readings-summary {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.readings-summary-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-soft);
+}
+
+.summary-stat strong {
+  font-size: 1.25rem;
+  color: var(--primary);
+}
+
+.summary-health {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--text-soft);
+}
+
+.health-indicator {
+  font-size: 0.8rem;
+  animation: none;
+}
+
+.health-indicator.healthy {
+  color: var(--primary);
+}
+
+.health-indicator.warning {
+  color: #ff9500;
+}
+
+/* CAMERA PREVIEW STYLES */
+.camera-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+}
+
+.camera-viewfinder {
+  background: #0a0a0a;
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 12px;
+  aspect-ratio: 16 / 12;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  min-height: 280px;
+}
+
+.camera-feed {
+  flex: 1;
+  background: var(--surface-2);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.rgb-stream {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a3622 0%, #1a5d3d 100%);
+}
+
+.placeholder-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-controls {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+}
+
+.control-icons {
+  display: flex;
+  gap: 16px;
+  font-size: 1.4rem;
+  color: var(--primary);
+}
+
+.control-icons span {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.control-icons span:hover {
+  transform: scale(1.2);
+}
+
+/* THERMAL CAMERA STYLES */
+.camera-preview.thermal {
+  background: var(--surface-2);
+}
+
+.thermal-viewfinder {
+  background: #0a0a0a;
+  border: 2px solid #ff6b35;
+  border-radius: 12px;
+  padding: 12px;
+  aspect-ratio: 16 / 12;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  min-height: 280px;
+}
+
+.thermal-heatmap {
+  flex: 1;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.thermal-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thermal-scale {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  margin-bottom: 8px;
+}
+
+.scale-label {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-weight: 600;
+  min-width: 40px;
+}
+
+.scale-label.cold {
+  text-align: right;
+}
+
+.scale-label.hot {
+  text-align: left;
+}
+
+.scale-gradient {
+  flex: 1;
+  height: 24px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, 
+    #000080 0%, 
+    #0000FF 25%, 
+    #00FF00 50%, 
+    #FFFF00 75%, 
+    #FF0000 100%);
+  border: 1px solid var(--border);
+}
+
+.thermal-reading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: rgba(255, 107, 53, 0.1);
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.temp-label {
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+.temp-value {
+  color: #ff6b35;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.camera-info {
+  background: var(--surface-2);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.camera-info strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.camera-info div {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  margin-bottom: 4px;
+}
+
+.camera-info small {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+/* NOIR CAMERA STYLES */
+.camera-preview.noir {
+  background: var(--surface-2);
+}
+
+.noir-viewfinder {
+  background: #0a0a0a;
+  border: 2px solid #00FF00;
+  border-radius: 12px;
+  padding: 12px;
+  aspect-ratio: 16 / 12;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+  min-height: 280px;
+}
+
+.noir-stream {
+  flex: 1;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.noir-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noir-controls {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.laser-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(0, 255, 0, 0.1);
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #00FF00;
+  font-weight: 600;
+}
+
+.laser-indicator {
+  font-size: 1.4rem;
+  color: #00FF00;
+  animation: laserPulse 1s ease-in-out infinite;
+}
+
+@keyframes laserPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.laser-text {
+  font-size: 0.95rem;
+}
+
+.noir-info {
+  background: var(--surface-2);
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
 }
 
 /* DEFECTS */

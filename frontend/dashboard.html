@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClaySight AI - Inspection Dashboard</title>
+  <title>ClaySight - Inspection Dashboard</title>
   <link rel="stylesheet" href="/assets/styles.css" />
   <script>
     (function() {
@@ -27,7 +27,7 @@
             <img src="/assets/img/logo.png" alt="Greenware Logo" />
           </div>
           <div class="brand-text-horizontal">
-            <h1>ClaySight AI</h1>
+            <h1>ClaySight</h1>
             <p>Greenware Inspection System</p>
           </div>
         </div>
@@ -111,23 +111,29 @@
         </article>
       </section>
 
-      <section class="two-col">
+      <section class="two-col-expanded">
         <article class="card">
           <div class="card-head"><h3>Sensor Status</h3><span class="muted">Ready for integration</span></div>
           <div id="sensorGrid" class="sensor-grid"></div>
         </article>
         <article class="card">
-          <div class="card-head"><h3>Summary</h3><span class="muted">Stored locally</span></div>
-          <div class="summary-list">
-            <div><span>Surface</span><strong id="surfaceCount">0</strong></div>
-            <div><span>Subsurface</span><strong id="subsurfaceCount">0</strong></div>
-            <div><span>Highest Confidence</span><strong id="highestConfidence">--</strong></div>
-            <div><span>Total Scans</span><strong id="totalScans">0</strong></div>
-            <div><span>Pass Rate</span><strong id="passRate">--</strong></div>
-            <div><span>Avg Defects</span><strong id="avgDefects">--</strong></div>
-          </div>
+          <div class="card-head"><h3>Sensor Readings</h3><span class="muted">Live sensor data</span></div>
+          <div id="sensorReadings" class="sensor-readings"></div>
+          <div id="sensorReadingsSummary" class="readings-summary"></div>
         </article>
       </section>
+
+      <article class="card summary-card-full">
+        <div class="card-head"><h3>Summary</h3><span class="muted">Stored locally</span></div>
+        <div class="summary-list">
+          <div><span>Surface</span><strong id="surfaceCount">0</strong></div>
+          <div><span>Subsurface</span><strong id="subsurfaceCount">0</strong></div>
+          <div><span>Highest Confidence</span><strong id="highestConfidence">--</strong></div>
+          <div><span>Total Scans</span><strong id="totalScans">0</strong></div>
+          <div><span>Pass Rate</span><strong id="passRate">--</strong></div>
+          <div><span>Avg Defects</span><strong id="avgDefects">--</strong></div>
+        </div>
+      </article>
 
       <section class="card">
         <div class="card-head">
@@ -216,7 +222,7 @@
   <!-- Copyright Footer -->
   <footer class="copyright-footer card">
     <div class="copyright-content">
-      <p>&copy; 2026 ClaySight AI. All rights reserved.</p>
+      <p>&copy; 2026 ClaySight. All rights reserved.</p>
       <p class="copyright-info">Student Engineering Project - Team 2, Computer Engineering Department</p>
     </div>
   </footer>

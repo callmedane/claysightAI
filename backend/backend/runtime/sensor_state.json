@@ -1,11 +1,11 @@
 {
   "camera": {
-    "label": "Camera / Vision",
+    "label": "8MP RGB Camera",
     "connected": false,
     "ready": false,
-    "notes": "Connect Pi Camera or USB camera.",
+    "notes": "Raspberry Pi Camera Module with 8MP resolution.",
     "source": "mock",
-    "last_reading_at": null
+    "last_reading_at": "2026-04-05T07:21:15.367951+00:00"
   },
   "thermal": {
     "label": "Thermal Sensor",
@@ -13,15 +13,23 @@
     "ready": false,
     "notes": "Reserved for thermal anomaly reading.",
     "source": "mock",
-    "last_reading_at": "2026-04-04T07:19:31.412667+00:00"
+    "last_reading_at": "2026-04-05T07:21:15.367951+00:00"
   },
-  "spectral": {
-    "label": "Spectral / NIR Proxy",
+  "noir": {
+    "label": "NoIR Camera + Laser Grid (No Infrared filter)",
     "connected": false,
     "ready": false,
-    "notes": "For low-cost spectral approximation.",
+    "notes": "Infrared sensitive camera with laser grid for 3D mapping.",
     "source": "mock",
-    "last_reading_at": "2026-04-04T07:19:31.412667+00:00"
+    "last_reading_at": "2026-04-05T07:21:15.367951+00:00"
+  },
+  "spectral": {
+    "label": "Spectral Sensor",
+    "connected": false,
+    "ready": false,
+    "notes": "Fusion-linked with NoIR camera preview for material detection.",
+    "source": "mock",
+    "last_reading_at": "2026-04-05T07:21:15.367951+00:00"
   },
   "moisture": {
     "label": "Moisture Sensor",
@@ -29,23 +37,15 @@
     "ready": false,
     "notes": "For clay moisture monitoring.",
     "source": "mock",
-    "last_reading_at": "2026-04-04T07:19:31.412667+00:00"
+    "last_reading_at": "2026-04-05T07:21:15.367951+00:00"
   },
-  "vibration": {
-    "label": "Acoustic / Vibration",
+  "humidity": {
+    "label": "Humidity Sensor",
     "connected": false,
     "ready": false,
-    "notes": "For knock or vibration feedback.",
+    "notes": "Reserved for humidity monitoring near the clay inspection chamber.",
     "source": "mock",
-    "last_reading_at": "2026-04-04T07:19:31.412667+00:00"
-  },
-  "inductive": {
-    "label": "Inductive / Metallic",
-    "connected": false,
-    "ready": false,
-    "notes": "For metallic contamination.",
-    "source": "mock",
-    "last_reading_at": "2026-04-04T07:19:31.412667+00:00"
+    "last_reading_at": "2026-04-05T07:21:15.367951+00:00"
   },
   "gas": {
     "label": "Gas / Ambient",
@@ -53,6 +53,6 @@
     "ready": false,
     "notes": "For surrounding environment checks.",
     "source": "mock",
-    "last_reading_at": "2026-04-04T07:19:31.412667+00:00"
+    "last_reading_at": "2026-04-05T07:21:15.367951+00:00"
   }
 }

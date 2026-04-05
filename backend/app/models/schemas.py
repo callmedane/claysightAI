@@ -11,13 +11,16 @@ SeverityType = Literal['low', 'medium', 'high']
 
 class SensorSnapshot(BaseModel):
     thermal_avg: float = 0.0
+    thermal_max: float = 0.0
     moisture: float = 0.0
+    humidity: float = 0.0
     hardness: float = 0.0
     vibration_peak: float = 0.0
     gas_level: float = 0.0
     spectral_signature: list[float] = Field(default_factory=list)
     metallic_flag: bool = False
     ambient_temp: float = 0.0
+    last_updated: datetime | None = None
 
 
 class SensorStatus(BaseModel):
