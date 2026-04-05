@@ -98,8 +98,8 @@ function updateVisualization(defects = []) {
 function renderSensors(sensors = []) {
   el.sensorGrid.innerHTML = '';
   sensors.forEach((sensor) => {
-    // Skip humidity sensor from display (shown only in Sensor Readings)
-    if (sensor.name === 'humidity_hw481') return;
+    // Skip humidity & moisture sensors from display (shown only in Sensor Readings)
+    if (sensor.name === 'humidity_hw481' || sensor.name === 'moisture') return;
     
     const div = document.createElement('div');
     div.className = 'sensor-item';
